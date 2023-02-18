@@ -92,7 +92,10 @@ def ibd2sql(args: dict):
                 else:
                     def_val = col.get('default_value_utf8')
                     if def_val:
-                        builder.write(f" DEFAULT '{def_val}'")
+                        if def_val == 'TIMESTAMP':
+                            builder.write(f" DEFAULT {def_val}")
+                        else:
+                            builder.write(f" DEFAULT '{def_val}'")
             comment = col.get('comment')
             if comment:
                 builder.write(f" COMMENT {comment}")
